@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: solr
+spec:
+  clusterIP: None
+  ports:
+    - port: 8983
+  selector:
+    app: solr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextgen
+spec:
+  ports:
+    - name: nextgen
+      port: 3000
+  selector:
+    app: nextgen
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: solr-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: do-block-storage
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solr
+  labels:
+    app: solr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: solr
+  template:
+    metadata:
+      labels:
+        app: solr
+    spec:
+      containers:
+        - name: solr
+          image: registry.digitalocean.com/nextgen/solr
+          ports:
+            - containerPort: 8983
+          volumeMounts:
+            - mountPath: /var/lib/solr/solr/data
+              name: solr-data
+      imagePullSecrets:
+        - name: registry-nextgen
+      volumes:
+        - name: solr-data
+          persistentVolumeClaim:
+            claimName: solr-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextgen
+  labels:
+    app: nextgen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextgen
+  template:
+    metadata:
+      labels:
+        app: nextgen
+    spec:
+      containers:
+        - name: nextgen
+          image: registry.digitalocean.com/nextgen/nextgen
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+      imagePullSecrets:
+        - name: registry-nextgen

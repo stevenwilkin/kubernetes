@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: solr-reindex
+spec:
+  template:
+    spec:
+      containers:
+        - name: solr-reindex
+          image: registry.digitalocean.com/nextgen/nextgen
+          command: ["rails"]
+          args: ["sunspot:reindex"]
+      imagePullSecrets:
+        - name: registry-nextgen
+      restartPolicy: Never
