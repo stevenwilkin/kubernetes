@@ -131,3 +131,10 @@ Copy an archive of the production database to the Mongo pod and restore from it:
 
 Locomotive can't be configured to run from a bare IP address so follow the existing configuration process but append
 `.xip.io` to the external IP address of the cluster and use this as the domain name.
+
+
+## Deploying Nextgen
+
+After building the image and pushing it to the registry run the following:
+
+	kubectl rolling restart deployment/nextgen
