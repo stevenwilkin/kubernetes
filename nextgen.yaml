@@ -85,5 +85,12 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
+          env:
+            - name: RAILS_ENV
+              value: production
+            - name: RAILS_LOG_TO_STDOUT
+              value: enabled
+            - name: RAILS_SERVE_STATIC_FILES
+              value: enabled
       imagePullSecrets:
         - name: registry-nextgen

@@ -10,6 +10,9 @@ spec:
           image: registry.digitalocean.com/nextgen/nextgen
           command: ["rails"]
           args: ["sunspot:reindex"]
+          env:
+            - name: RAILS_ENV
+              value: production
       imagePullSecrets:
         - name: registry-nextgen
       restartPolicy: Never

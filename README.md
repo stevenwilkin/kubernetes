@@ -124,7 +124,7 @@ Copy an archive of the production database to the Mongo pod and restore from it:
 	kubectl cp /path/to/locomotiveapp_production.tar <MONGO>:locomotiveapp_production.tar
 	kubectl exec -it <MONGO> bash
 	tar xf locomotiveapp_production.tar
-	mongorestore --db locomotiveapp_dev --drop locomotiveapp_production
+	mongorestore --db locomotiveapp_production --drop locomotiveapp_production
 
 
 ## Locomotive configuration
