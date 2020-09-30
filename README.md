@@ -57,6 +57,16 @@ The library used by the Rails application doesn't support the newer style of aut
 	mysql -u <USER> -p<PASSWORD> -h <HOST> -P <PORT> -D <DATABASE> < /path/to/msri_nextgen.sql
 
 
+## Import the SSL certificate
+
+	doctl compute certificate create \
+	    --type custom \
+	    --name star-msri-org \
+	    --leaf-certificate-path /path/to/star_msri_org.crt \
+	    --private-key-path /path/to/star_msri_org.key
+
+The ID returned will be refered to using the `service.beta.kubernetes.io/do-loadbalancer-certificate-id` annotation in the relevant manifest.
+
 ## Container images
 
 ### Authentication

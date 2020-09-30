@@ -2,9 +2,17 @@ apiVersion: v1
 kind: Service
 metadata:
   name: proxy
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
+    service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: "true"
+    service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
+    service.beta.kubernetes.io/do-loadbalancer-certificate-id: "15896323-3e31-4fdd-bf99-9cb725d31869"
 spec:
   ports:
-    - name: proxy
+    - name: https
+      port: 443
+      targetPort: 80
+    - name: http-redirect
       port: 80
   selector:
     app: proxy
