@@ -137,4 +137,4 @@ Locomotive can't be configured to run from a bare IP address so follow the exist
 
 After building the image and pushing it to the registry run the following:
 
-	kubectl rolling restart deployment/nextgen
+	kubectl rollout restart deployment/nextgen
