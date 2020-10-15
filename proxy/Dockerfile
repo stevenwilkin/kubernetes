@@ -1,4 +1,6 @@
 FROM nginx
 
-COPY nginx.conf /etc/nginx/
-COPY proxy.conf /etc/nginx/
+COPY . .
+
+RUN cp -f nginx.conf /etc/nginx/ \
+	&& cp -rf conf.d /etc/nginx
